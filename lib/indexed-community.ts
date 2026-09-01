@@ -1,4 +1,4 @@
-import { seedPosts, type CommunityPost, type ReactionKey } from '@/lib/community-data';
+import { seedPosts, type CommunityPost } from '@/lib/community-data';
 
 const databaseName = 'emotion-center-private-v1';
 const postsStore = 'posts';
@@ -97,7 +97,6 @@ export async function deleteSetting(key: string) {
 }
 
 export type LocalCommunitySettings = {
-  myReactions: Record<string, ReactionKey[]>;
   hiddenPostIds: string[];
 };
 
@@ -116,11 +115,10 @@ export async function migrateLegacyLocalStorage() {
     }
   }
   try {
-    const myReactions = JSON.parse(window.localStorage.getItem('emotion-center-reactions-v1') ?? '{}');
     const hiddenPostIds = JSON.parse(window.localStorage.getItem('emotion-center-hidden-v1') ?? '[]');
-    await setSetting<LocalCommunitySettings>('community-settings', { myReactions, hiddenPostIds });
+    await setSetting<LocalCommunitySettings>('community-settings', { hiddenPostIds });
   } catch {
-    await setSetting<LocalCommunitySettings>('community-settings', { myReactions: {}, hiddenPostIds: [] });
+    await setSetting<LocalCommunitySettings>('community-settings', { hiddenPostIds: [] });
   }
   await setSetting('legacy-migrated', true);
   window.localStorage.removeItem('emotion-center-posts-v1');

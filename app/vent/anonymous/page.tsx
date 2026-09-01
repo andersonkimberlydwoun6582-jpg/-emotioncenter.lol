@@ -13,7 +13,7 @@ export default function AnonymousVentPage() {
         <p>Loosen it here. In this local version, your post stays in this browser. You are a few paragraphs, not a profile. Please leave out names, workplaces, addresses, and other details that could identify someone.</p>
       </EditorialSection>
 
-      <div id="write"><Composer buttonLabel="Save this vent" channel="vent" prompt="Start typing. No name needed." /></div>
+      <div id="write"><Composer channel="vent" prompt="Start typing. No name needed." /></div>
       <CommunityFeed channel="vent" limit={6} title="Other things held in this space" />
 
       <EditorialSection eyebrow="No apology required" title="Anger can be a boundary speaking loudly.">
