@@ -29,6 +29,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .brand { display: inline-flex; align-items: center; gap: .7rem; font-weight: 700; letter-spacing: -.02em; color: var(--ink); }
 .brand-mark { display: grid; width: 2rem; height: 2rem; place-items: center; border-radius: 50%; background: var(--ink); color: var(--paper-light); }
 .brand-mark svg { width: 1rem; }
+.my-notes-nav { display: inline-flex; min-height: 2.5rem; align-items: center; gap: .4rem; margin-left: auto; padding: .55rem .85rem; border: 1px solid rgba(34,49,46,.22); border-radius: 999px; background: var(--paper-light); color: var(--ink); font-size: .78rem; font-weight: 800; white-space: nowrap; }
+.my-notes-nav svg { width: 1rem; }
 .hero-shell { position: relative; min-height: 540px; overflow: hidden; background: linear-gradient(145deg, #f7f4ee 20%, #eef2ec 100%); }
 .ambient { position: absolute; border-radius: 999px; filter: blur(1px); opacity: .7; }
 .ambient-one { right: -9rem; top: 3rem; width: 34rem; height: 34rem; background: radial-gradient(circle, #dce9df 0%, rgba(220,233,223,0) 70%); }
@@ -386,3 +388,27 @@ html[data-emotion='fun'] .joke-card:nth-child(even):hover { transform: rotate(-1
 .recovery-success h2 { font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 400; }
 .recovery-success p { color: var(--ink-soft); }
 .recovery-success .primary-link { justify-self: start; }
+
+/* One simple place for every private entry */
+.my-notes-page { min-height: 72vh; padding-block: clamp(4rem, 8vw, 7rem); }
+.my-notes-heading > p:last-child { display: flex; align-items: center; gap: .5rem; margin-top: 1rem; color: var(--ink-soft); }
+.my-notes-heading svg { width: 1rem; }
+.my-notes-loading { margin-top: 3rem; color: var(--ink-soft); }
+.my-notes-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 3rem; }
+.my-note-card { min-height: 260px; display: flex; flex-direction: column; padding: 1.4rem; border: 1px dashed rgba(34,49,46,.3); border-radius: 1.2rem; background: rgba(255,253,248,.74); color: var(--ink); transition: transform .2s ease, background .2s ease; }
+.my-note-card:hover { transform: translateY(-3px); background: var(--paper-light); }
+.my-note-card h2 { margin-top: .8rem; font-family: var(--font-heading); font-size: 1.55rem; line-height: 1.15; font-weight: 400; }
+.my-note-card > p { display: -webkit-box; margin-top: .8rem; overflow: hidden; color: var(--ink-soft); line-height: 1.6; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
+.my-note-card strong { display: inline-flex; align-items: center; gap: .4rem; margin-top: auto; padding-top: 1.5rem; font-size: .78rem; }
+.my-note-card strong svg { width: .9rem; }
+.my-notes-empty { margin-top: 3rem; padding: clamp(1.5rem, 4vw, 2.5rem); border: 1px dashed rgba(34,49,46,.3); border-radius: 1.2rem; background: rgba(255,253,248,.65); }
+.my-notes-empty h2 { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 400; }
+.my-notes-empty > p { margin-top: .5rem; color: var(--ink-soft); }
+.my-notes-empty > div { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.3rem; }
+.my-notes-empty a { padding: .6rem .85rem; border-radius: 999px; background: var(--ink); color: var(--paper-light); font-size: .78rem; font-weight: 800; }
+
+@media (max-width: 720px) {
+  .site-header .site-container { gap: .75rem; }
+  .brand > span:last-child { display: none; }
+  .my-notes-grid { grid-template-columns: 1fr; }
+}
