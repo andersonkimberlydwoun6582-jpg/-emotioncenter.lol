@@ -29,9 +29,11 @@ export function Composer({ channel, category = 'general', prompt }: { channel: C
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
+  const [saving, setSaving] = useState(false);
 
   async function submit(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (saving) return;
     if (!title.trim()) {
       setError('Add a title before saving.');
       return;
@@ -40,11 +42,13 @@ export function Composer({ channel, category = 'general', prompt }: { channel: C
       setError('Add a few words before saving.');
       return;
     }
+    setSaving(true);
     try {
       const post = await addPost({ channel, category, title: title.trim(), content: content.trim() });
       window.location.assign(routeFor(channel, post.id));
     } catch {
       setError('This browser could not save the entry. Check private-browsing storage settings and try again.');
+      setSaving(false);
     }
   }
 
@@ -58,7 +62,7 @@ export function Composer({ channel, category = 'general', prompt }: { channel: C
       <Textarea className="min-h-40 resize-y bg-white/50 p-4 leading-7" id={`${channel}-post-content`} maxLength={3000} onChange={(event) => { setContent(event.target.value); setError(''); }} placeholder={copy.bodyPlaceholder} value={content} />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs leading-5 text-ink-soft">Avoid names, addresses, workplaces, or other identifying details.</p>
-        <Button className="h-11 rounded-full px-5" type="submit"><Save /> Save privately</Button>
+        <Button className="h-11 rounded-full px-5" disabled={saving} type="submit"><Save /> {saving ? 'Saving…' : 'Save privately'}</Button>
       </div>
       {error && <p className="text-sm text-red-700" role="alert">{error}</p>}
     </form>
