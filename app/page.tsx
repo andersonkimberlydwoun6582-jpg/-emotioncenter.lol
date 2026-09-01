@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { ArrowRight, Feather, Flame, Heart, Sparkles } from 'lucide-react';
 
 export const metadata: Metadata = { alternates: { canonical: '/' } };
@@ -35,14 +34,14 @@ export default function Home() {
           {doors.map((door) => {
             const Icon = door.icon;
             return (
-              <Link className={`emotion-door ${door.tone}`} data-cursor-theme={door.href.split('/')[1] || 'home'} href={door.href} key={door.href}>
+              <a className={`emotion-door ${door.tone}`} data-cursor-theme={door.href.split('/')[1] || 'home'} href={door.href} key={door.href}>
                 <div className="door-icon"><Icon aria-hidden="true" /></div>
                 <span aria-hidden="true" className="card-tape" />
                 <p className="eyebrow">{door.eyebrow}</p>
                 <h2>{door.title}</h2>
                 <p className="door-copy">{door.copy}</p>
                 <span className="door-action">{door.action} <ArrowRight aria-hidden="true" /></span>
-              </Link>
+              </a>
             );
           })}
         </div>

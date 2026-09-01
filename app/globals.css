@@ -148,10 +148,10 @@ body {
   border-radius: 26px 22px 30px 20px;
 }
 .postal-eyebrow { display: inline-flex; padding: .55rem .75rem; border: 2px solid currentColor; border-radius: 7px; background: rgba(255,250,241,.74); transform: rotate(-1.4deg); box-shadow: inset 0 0 0 2px rgba(255,250,241,.8); }
-.paper-scrap { position: absolute; z-index: 2; padding: .72rem 1rem; border: 2px solid currentColor; background: #fffaf0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .68rem; font-weight: 800; letter-spacing: .12em; color: #9c5045; box-shadow: 3px 4px 0 rgba(61,47,37,.1); }
+.paper-scrap { position: absolute; z-index: 2; padding: .72rem 1rem; border: 2px solid currentColor; background: #fffaf0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .68rem; font-weight: 800; letter-spacing: .12em; color: #9c5045; box-shadow: 3px 4px 0 rgba(61,47,37,.1); pointer-events: none; }
 .paper-scrap-one { right: 8%; top: 18%; transform: rotate(6deg); }
 .paper-scrap-two { right: 17%; bottom: 12%; color: #5f7d70; transform: rotate(-4deg); }
-.doodle-loop { position: absolute; right: -5rem; top: 3rem; width: 28rem; height: 24rem; border: 3px solid rgba(108,139,123,.2); border-radius: 43% 57% 48% 52%; transform: rotate(16deg); }
+.doodle-loop { position: absolute; right: -5rem; top: 3rem; width: 28rem; height: 24rem; border: 3px solid rgba(108,139,123,.2); border-radius: 43% 57% 48% 52%; transform: rotate(16deg); pointer-events: none; }
 .doodle-loop::after { content: ''; position: absolute; inset: 3.8rem 4.5rem; border: 2px dashed rgba(214,123,100,.2); border-radius: 54% 46% 60% 40%; transform: rotate(-25deg); }
 .ambient { opacity: .35; }
 .emotion-door {
@@ -165,8 +165,9 @@ body {
 .emotion-door:nth-child(3) { transform: rotate(-.5deg); }
 .emotion-door:nth-child(4) { transform: rotate(1.1deg); }
 .emotion-door:hover { transform: rotate(0) translateY(-8px); box-shadow: 7px 12px 0 rgba(72,55,39,.1), 0 22px 40px rgba(66,50,35,.12); }
+.emotion-door::before, .emotion-door::after { pointer-events: none; }
 .emotion-door::before { content: ''; position: absolute; inset: 0; z-index: -1; opacity: .22; background: repeating-linear-gradient(0deg, transparent 0 4px, rgba(55,45,34,.055) 4px 5px); }
-.card-tape { position: absolute; top: -7px; left: 50%; width: 76px; height: 24px; background: rgba(255,246,210,.64); border-right: 1px dashed rgba(60,49,39,.16); border-left: 1px dashed rgba(60,49,39,.16); transform: translateX(-50%) rotate(-2deg); }
+.card-tape { position: absolute; top: -7px; left: 50%; width: 76px; height: 24px; background: rgba(255,246,210,.64); border-right: 1px dashed rgba(60,49,39,.16); border-left: 1px dashed rgba(60,49,39,.16); transform: translateX(-50%) rotate(-2deg); pointer-events: none; }
 .door-icon { border: 2px solid rgba(34,49,46,.55); background: rgba(255,252,245,.72); box-shadow: 2px 2px 0 rgba(34,49,46,.18); }
 .door-action { border-top: 1px dashed rgba(34,49,46,.25); }
 .privacy-note { border: 1px dashed rgba(64,51,39,.35); border-radius: 6px; background: #fffaf0; box-shadow: 4px 5px 0 rgba(72,55,39,.08); transform: rotate(-.4deg); }
