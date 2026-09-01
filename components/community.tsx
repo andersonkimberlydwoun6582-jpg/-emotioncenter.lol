@@ -67,7 +67,7 @@ export function Composer({ channel, category = 'general', prompt, buttonLabel }:
       setError('Add a title before saving.');
       return;
     }
-    if (content.trim().length < 2) {
+    if (!content.trim()) {
       setError('Add a few words before saving.');
       return;
     }
