@@ -79,7 +79,7 @@ export function Composer({ channel, category = 'general', prompt, buttonLabel }:
         <Textarea aria-label="Your words" className="mt-2 min-h-40 resize-y bg-white/50 p-4 leading-7" maxLength={3000} onChange={(event) => setContent(event.target.value)} placeholder={copy.bodyPlaceholder} value={content} />
       </label>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs leading-5 text-ink-soft">Saved in this browser for the local preview. Avoid names, addresses, workplaces, or other identifying details.</p>
+        <p className="text-xs leading-5 text-ink-soft">Saved only in this browser. Avoid names, addresses, workplaces, or other identifying details.</p>
         <Button className="h-11 rounded-full px-5" type="submit"><Send /> {buttonLabel}</Button>
       </div>
       {error && <p className="text-sm text-red-700" role="alert">{error}</p>}

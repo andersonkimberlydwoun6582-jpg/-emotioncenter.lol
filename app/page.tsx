@@ -57,7 +57,7 @@ export default function Home() {
 
         <div className="privacy-note mt-20">
           <div className="privacy-dot" />
-          <div><p className="font-semibold text-ink">Your words, at your pace.</p><p className="mt-1 text-sm leading-6 text-ink-soft">This local preview stores what you write only in this browser. No name or email is requested.</p></div>
+          <div><p className="font-semibold text-ink">Your words, at your pace.</p><p className="mt-1 text-sm leading-6 text-ink-soft">What you write is stored only in this browser. No name or email is requested.</p></div>
         </div>
       </section>
     </main>
