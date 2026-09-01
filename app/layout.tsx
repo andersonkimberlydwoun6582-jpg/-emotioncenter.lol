@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import { Geist } from 'next/font/google';
-import Link from 'next/link';
 import { HeartHandshake } from 'lucide-react';
 import { CommunityProvider } from '@/components/community-store';
 import { CartoonCursor } from '@/components/cartoon-cursor';
 import './globals.css';
+
+/* Native navigation is intentional because browser translation can rewrite the client router DOM. */
+/* oxlint-disable next/no-html-link-for-pages */
 
 const geist = Geist({ variable: '--font-geist', subsets: ['latin'] });
 
@@ -25,11 +27,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <CartoonCursor />
         <header className="site-header">
           <div className="site-container flex h-20 items-center justify-between gap-6">
-            <Link className="brand" href="/" aria-label="Emotion Center home">
+            <a className="brand" href="/" aria-label="Emotion Center home">
               <span className="brand-mark"><HeartHandshake aria-hidden="true" /></span><span>Emotion Center</span>
-            </Link>
+            </a>
             <nav className="hidden items-center gap-7 text-sm font-medium text-ink-soft sm:flex" aria-label="Main navigation">
-              <Link href="/vent">Vent</Link><Link href="/grief">Grief</Link><Link href="/gratitude/affirmations">Affirmations</Link><Link href="/fun">Smile</Link><Link href="/recover">Restore</Link>
+              <a href="/">Home</a><a href="/vent">Vent</a><a href="/grief">Grief</a><a href="/gratitude/affirmations">Affirmations</a><a href="/fun">Smile</a><a href="/recover">Restore</a>
             </nav>
           </div>
         </header>
@@ -37,7 +39,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <footer className="border-t border-line bg-paper-deep">
           <div className="site-container flex flex-col gap-5 py-10 text-sm text-ink-soft sm:flex-row sm:items-center sm:justify-between">
             <p>© 2026 Emotion Center. A place for what you feel.</p>
-            <div className="flex flex-wrap gap-5"><Link href="/">Home</Link><Link href="/grief">Grief</Link><Link href="/vent">Vent</Link><Link href="/gratitude/affirmations">Affirmations</Link><Link href="/fun">Smile</Link><Link href="/recover">Restore</Link></div>
+            <div className="flex flex-wrap gap-5"><a href="/">Home</a><a href="/grief">Grief</a><a href="/vent">Vent</a><a href="/gratitude/affirmations">Affirmations</a><a href="/fun">Smile</a><a href="/recover">Restore</a></div>
           </div>
         </footer>
         </CommunityProvider>
