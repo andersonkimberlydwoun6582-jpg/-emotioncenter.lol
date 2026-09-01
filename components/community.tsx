@@ -63,8 +63,12 @@ export function Composer({ channel, category = 'general', prompt, buttonLabel }:
 
   async function submit(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (title.trim().length < 4 || content.trim().length < 12) {
-      setError('Add a short title and a few more words before sharing.');
+    if (!title.trim()) {
+      setError('Add a title before saving.');
+      return;
+    }
+    if (!content.trim()) {
+      setError('Add a few words before saving.');
       return;
     }
     try {
@@ -79,9 +83,9 @@ export function Composer({ channel, category = 'general', prompt, buttonLabel }:
     <form className={`composer composer-${channel}`} onSubmit={submit}>
       <div><p className="eyebrow mb-3">Write without a profile</p><h2 className="font-heading text-3xl font-normal tracking-tight sm:text-4xl">{prompt}</h2></div>
       <label className="field-label" htmlFor={`${channel}-post-title`}>Give your words a title</label>
-      <Input className="h-11 bg-white/50 px-4" id={`${channel}-post-title`} maxLength={100} onChange={(event) => setTitle(event.target.value)} placeholder={copy.titlePlaceholder} value={title} />
+      <Input className="h-11 bg-white/50 px-4" id={`${channel}-post-title`} maxLength={100} onChange={(event) => { setTitle(event.target.value); setError(''); }} placeholder={copy.titlePlaceholder} value={title} />
       <label className="field-label" htmlFor={`${channel}-post-content`}>Your words</label>
-      <Textarea className="min-h-40 resize-y bg-white/50 p-4 leading-7" id={`${channel}-post-content`} maxLength={3000} onChange={(event) => setContent(event.target.value)} placeholder={copy.bodyPlaceholder} value={content} />
+      <Textarea className="min-h-40 resize-y bg-white/50 p-4 leading-7" id={`${channel}-post-content`} maxLength={3000} onChange={(event) => { setContent(event.target.value); setError(''); }} placeholder={copy.bodyPlaceholder} value={content} />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs leading-5 text-ink-soft">Private to this browser unless you choose an encrypted backup. Avoid names, addresses, workplaces, or identifying details.</p>
         <Button className="h-11 rounded-full px-5" type="submit"><Send /> {buttonLabel}</Button>
