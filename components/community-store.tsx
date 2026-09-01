@@ -16,10 +16,6 @@ type Store = {
 
 const CommunityContext = createContext<Store | null>(null);
 
-function slugify(value: string) {
-  return value.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 55) || 'anonymous-note';
-}
-
 export function CommunityProvider({ children }: { children: React.ReactNode }) {
   const [posts, setPosts] = useState<CommunityPost[]>(seedPosts);
   const [hiddenPostIds, setHiddenPostIds] = useState<string[]>([]);
@@ -51,7 +47,7 @@ export function CommunityProvider({ children }: { children: React.ReactNode }) {
     addPost: async (input) => {
       const post: CommunityPost = {
         ...input,
-        id: `${slugify(input.title)}-${Date.now().toString(36)}`,
+        id: crypto.randomUUID(),
         createdAt: new Date().toISOString(),
         isMine: true,
       };

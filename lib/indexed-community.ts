@@ -26,6 +26,14 @@ function requestResult<T>(request: IDBRequest<T>) {
   });
 }
 
+function transactionDone(transaction: IDBTransaction) {
+  return new Promise<void>((resolve, reject) => {
+    transaction.oncomplete = () => resolve();
+    transaction.onerror = () => reject(transaction.error);
+    transaction.onabort = () => reject(transaction.error);
+  });
+}
+
 export async function loadLocalPosts() {
   const database = await openDatabase();
   try {
@@ -38,7 +46,9 @@ export async function loadLocalPosts() {
 export async function saveLocalPost(post: CommunityPost) {
   const database = await openDatabase();
   try {
-    await requestResult(database.transaction(postsStore, 'readwrite').objectStore(postsStore).put(post));
+    const transaction = database.transaction(postsStore, 'readwrite');
+    transaction.objectStore(postsStore).put(post);
+    await transactionDone(transaction);
   } finally {
     database.close();
   }
@@ -49,11 +59,7 @@ export async function saveLocalPosts(posts: CommunityPost[]) {
   try {
     const transaction = database.transaction(postsStore, 'readwrite');
     for (const post of posts) transaction.objectStore(postsStore).put(post);
-    await new Promise<void>((resolve, reject) => {
-      transaction.oncomplete = () => resolve();
-      transaction.onerror = () => reject(transaction.error);
-      transaction.onabort = () => reject(transaction.error);
-    });
+    await transactionDone(transaction);
   } finally {
     database.close();
   }
@@ -62,7 +68,9 @@ export async function saveLocalPosts(posts: CommunityPost[]) {
 export async function deleteLocalPost(id: string) {
   const database = await openDatabase();
   try {
-    await requestResult(database.transaction(postsStore, 'readwrite').objectStore(postsStore).delete(id));
+    const transaction = database.transaction(postsStore, 'readwrite');
+    transaction.objectStore(postsStore).delete(id);
+    await transactionDone(transaction);
   } finally {
     database.close();
   }
@@ -81,7 +89,9 @@ export async function getSetting<T>(key: string) {
 export async function setSetting<T>(key: string, value: T) {
   const database = await openDatabase();
   try {
-    await requestResult(database.transaction(settingsStore, 'readwrite').objectStore(settingsStore).put({ key, value } satisfies SettingRecord));
+    const transaction = database.transaction(settingsStore, 'readwrite');
+    transaction.objectStore(settingsStore).put({ key, value } satisfies SettingRecord);
+    await transactionDone(transaction);
   } finally {
     database.close();
   }
@@ -90,7 +100,9 @@ export async function setSetting<T>(key: string, value: T) {
 export async function deleteSetting(key: string) {
   const database = await openDatabase();
   try {
-    await requestResult(database.transaction(settingsStore, 'readwrite').objectStore(settingsStore).delete(key));
+    const transaction = database.transaction(settingsStore, 'readwrite');
+    transaction.objectStore(settingsStore).delete(key);
+    await transactionDone(transaction);
   } finally {
     database.close();
   }
