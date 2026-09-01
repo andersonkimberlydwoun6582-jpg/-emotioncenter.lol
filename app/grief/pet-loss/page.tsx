@@ -13,7 +13,7 @@ export default function PetLossPage() {
         <p>You do not have to shrink this loss for them. The quiet in the house is real. The habits your hands still remember are real. So is the love beneath all of it.</p>
       </EditorialSection>
 
-      <div id="write"><Composer buttonLabel="Write to my pet" category="pet-loss" channel="grief" prompt="What would you say to them today?" /></div>
+      <div id="write"><Composer buttonLabel="Save this letter" category="pet-loss" channel="grief" prompt="What would you say to them today?" /></div>
       <CommunityFeed category="pet-loss" channel="grief" limit={6} title="Letters to deeply loved companions" />
 
       <EditorialSection eyebrow="A gentler way forward" title="You do not have to replace them.">

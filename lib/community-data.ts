@@ -10,6 +10,7 @@ export type CommunityPost = {
   createdAt: string;
   reactions: Record<ReactionKey, number>;
   responses: { id: string; content: string; createdAt: string }[];
+  isMine?: boolean;
 };
 
 export const seedPosts: CommunityPost[] = [

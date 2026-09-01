@@ -15,8 +15,8 @@ export default function GriefPage() {
 
       <section className="content-section content-narrow"><p className="eyebrow mb-3">Who are you missing?</p><h2 className="font-heading text-3xl font-normal tracking-tight sm:text-5xl">There is room for every kind of loss.</h2><TopicLinks links={[{ label: 'My mom', href: '/grief/missing-mom' }, { label: 'My dad or parent', href: '#write' }, { label: 'My pet', href: '/grief/pet-loss' }, { label: 'My partner', href: '#write' }, { label: 'My friend', href: '#write' }, { label: 'My grandparent', href: '#write' }]} /></section>
 
-      <CommunityFeed channel="grief" title="Letters left here with love" />
-      <div id="write"><Composer buttonLabel="Share this letter" channel="grief" prompt="What would you say to them today?" /></div>
+      <CommunityFeed channel="grief" title="Letters held here with care" />
+      <div id="write"><Composer buttonLabel="Save this letter" channel="grief" prompt="What would you say to them today?" /></div>
       <EmotionLinks current="grief" />
       <SafetyNote />
     </div>

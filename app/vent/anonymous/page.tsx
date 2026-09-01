@@ -13,8 +13,8 @@ export default function AnonymousVentPage() {
         <p>Loosen it here. In this local version, your post stays in this browser. You are a few paragraphs, not a profile. Please leave out names, workplaces, addresses, and other details that could identify someone.</p>
       </EditorialSection>
 
-      <div id="write"><Composer buttonLabel="Vent anonymously" channel="vent" prompt="Start typing. No name needed." /></div>
-      <CommunityFeed channel="vent" limit={6} title="Other things people needed to say" />
+      <div id="write"><Composer buttonLabel="Save this vent" channel="vent" prompt="Start typing. No name needed." /></div>
+      <CommunityFeed channel="vent" limit={6} title="Other things held in this space" />
 
       <EditorialSection eyebrow="No apology required" title="Anger can be a boundary speaking loudly.">
         <p>It is not always beautiful or reasonable, but it is information. Let it tell you what was crossed, what hurt, or what needs to change—after you have had room to breathe.</p>
