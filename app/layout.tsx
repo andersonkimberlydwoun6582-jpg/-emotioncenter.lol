@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist } from 'next/font/google';
-import { HeartHandshake } from 'lucide-react';
+import { HeartHandshake, NotebookPen } from 'lucide-react';
 import { CommunityProvider } from '@/components/community-store';
 import { CartoonCursor } from '@/components/cartoon-cursor';
 import './globals.css';
@@ -30,6 +30,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <a className="brand" href="/" aria-label="Emotion Center home">
               <span className="brand-mark"><HeartHandshake aria-hidden="true" /></span><span>Emotion Center</span>
             </a>
+            <a className="my-notes-nav" href="/my-notes"><NotebookPen aria-hidden="true" /> My notes</a>
             <nav className="hidden items-center gap-7 text-sm font-medium text-ink-soft sm:flex" aria-label="Main navigation">
               <a href="/">Home</a><a href="/vent">Vent</a><a href="/grief">Grief</a><a href="/gratitude/affirmations">Affirmations</a><a href="/fun">Smile</a><a href="/recover">Restore</a>
             </nav>
@@ -39,7 +40,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <footer className="border-t border-line bg-paper-deep">
           <div className="site-container flex flex-col gap-5 py-10 text-sm text-ink-soft sm:flex-row sm:items-center sm:justify-between">
             <p>© 2026 Emotion Center. A place for what you feel.</p>
-            <div className="flex flex-wrap gap-5"><a href="/">Home</a><a href="/grief">Grief</a><a href="/vent">Vent</a><a href="/gratitude/affirmations">Affirmations</a><a href="/fun">Smile</a><a href="/recover">Restore</a></div>
+            <div className="flex flex-wrap gap-5"><a href="/">Home</a><a href="/my-notes">My notes</a><a href="/grief">Grief</a><a href="/vent">Vent</a><a href="/gratitude/affirmations">Affirmations</a><a href="/fun">Smile</a><a href="/recover">Restore</a></div>
           </div>
         </footer>
         </CommunityProvider>
