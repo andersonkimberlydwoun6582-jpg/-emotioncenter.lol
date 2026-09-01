@@ -9,6 +9,9 @@ import { type Channel } from '@/lib/community-data';
 import { routeFor, useCommunity } from '@/components/community-store';
 import { CloudBackupPanel } from '@/components/cloud-backup-panel';
 import { deleteDraftEverywhere } from '@/lib/cloud-backup';
+import { CHANNEL_PROMPTS } from '@/config/prompts';
+import { EMOTIONS, type EmotionId } from '@/config/emotions';
+import { VoiceInputButton } from '@/components/voice-input-button';
 
 const dateFormat = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 
@@ -30,6 +33,11 @@ export function Composer({ channel, category = 'general', prompt }: { channel: C
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
+  const [emotions, setEmotions] = useState<EmotionId[]>([]);
+
+  function toggleEmotion(emotion: EmotionId) {
+    setEmotions((current) => current.includes(emotion) ? current.filter((item) => item !== emotion) : [...current, emotion]);
+  }
 
   async function submit(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -44,7 +52,7 @@ export function Composer({ channel, category = 'general', prompt }: { channel: C
     }
     setSaving(true);
     try {
-      const post = await addPost({ channel, category, title: title.trim(), content: content.trim() });
+      const post = await addPost({ channel, category, title: title.trim(), content: content.trim(), emotions });
       window.location.assign(routeFor(channel, post.id));
     } catch {
       setError('This browser could not save the entry. Check private-browsing storage settings and try again.');
@@ -55,11 +63,13 @@ export function Composer({ channel, category = 'general', prompt }: { channel: C
   return (
     <form className={`composer composer-${channel}`} onSubmit={submit}>
       <div><p className="eyebrow mb-3">Write without a profile</p><h2 className="font-heading text-3xl font-normal tracking-tight sm:text-4xl">{prompt}</h2></div>
-      <div className="private-writing-notice"><LockKeyhole /><div><strong>Saved only on this device.</strong><p>Choose an encrypted backup after saving if you want to access this entry elsewhere.</p></div></div>
+      <div className="prompt-group"><p className="field-label">Need a place to start?</p><div className="prompt-pills">{CHANNEL_PROMPTS[channel].map((item) => <button className="prompt-pill" key={item} onClick={() => { setTitle(item); setError(''); }} type="button">{item}</button>)}</div></div>
       <label className="field-label" htmlFor={`${channel}-post-title`}>Give your words a title</label>
       <Input className="h-11 bg-white/50 px-4" id={`${channel}-post-title`} maxLength={100} onChange={(event) => { setTitle(event.target.value); setError(''); }} placeholder={copy.titlePlaceholder} value={title} />
+      <div className="private-writing-notice"><LockKeyhole /><div><strong>Saved only on this device.</strong><p>Choose an encrypted backup after saving if you want to access this entry elsewhere.</p></div></div>
       <label className="field-label" htmlFor={`${channel}-post-content`}>Your words</label>
-      <Textarea className="min-h-40 resize-y bg-white/50 p-4 leading-7" id={`${channel}-post-content`} maxLength={3000} onChange={(event) => { setContent(event.target.value); setError(''); }} placeholder={copy.bodyPlaceholder} value={content} />
+      <div className="voice-textarea-wrap"><Textarea className="min-h-40 resize-y bg-white/50 p-4 pb-14 leading-7" id={`${channel}-post-content`} maxLength={3000} onChange={(event) => { setContent(event.target.value); setError(''); }} placeholder={copy.bodyPlaceholder} value={content} /><VoiceInputButton onChange={(value) => { setContent(value.slice(0, 3000)); setError(''); }} textareaId={`${channel}-post-content`} value={content} /></div>
+      <fieldset className="emotion-picker"><legend className="field-label">How does this feel? <span>Optional · choose more than one</span></legend><div>{EMOTIONS.map((emotion) => { const selected = emotions.includes(emotion.id); return <button aria-pressed={selected} className="emotion-choice" data-selected={selected} key={emotion.id} onClick={() => toggleEmotion(emotion.id)} type="button"><span aria-hidden="true">{emotion.emoji}</span>{emotion.label}</button>; })}</div></fieldset>
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-xs leading-5 text-ink-soft">Avoid names, addresses, workplaces, or other identifying details.</p>
         <Button className="h-11 rounded-full px-5" disabled={saving} type="submit"><Save /> {saving ? 'Saving…' : 'Save privately'}</Button>
