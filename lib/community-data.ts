@@ -6,6 +6,7 @@ export type CommunityPost = {
   category: string;
   title: string;
   content: string;
+  emotions?: string[];
   createdAt?: string;
   isMine?: boolean;
 };

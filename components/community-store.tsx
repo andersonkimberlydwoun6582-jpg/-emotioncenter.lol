@@ -8,7 +8,7 @@ type Store = {
   posts: CommunityPost[];
   hydrated: boolean;
   hiddenPostIds: string[];
-  addPost: (input: Pick<CommunityPost, 'channel' | 'category' | 'title' | 'content'>) => Promise<CommunityPost>;
+  addPost: (input: Pick<CommunityPost, 'channel' | 'category' | 'title' | 'content' | 'emotions'>) => Promise<CommunityPost>;
   updatePost: (id: string, input: Pick<CommunityPost, 'title' | 'content'>) => Promise<CommunityPost>;
   hidePost: (id: string) => Promise<void>;
   deletePost: (id: string) => Promise<void>;
