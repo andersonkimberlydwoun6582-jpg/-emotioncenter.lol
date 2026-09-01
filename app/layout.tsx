@@ -29,7 +29,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
               <span className="brand-mark"><HeartHandshake aria-hidden="true" /></span><span>Emotion Center</span>
             </Link>
             <nav className="hidden items-center gap-7 text-sm font-medium text-ink-soft sm:flex" aria-label="Main navigation">
-              <Link href="/vent">Vent</Link><Link href="/grief">Grief</Link><Link href="/gratitude/affirmations">Affirmations</Link><Link href="/fun">Smile</Link>
+              <Link href="/vent">Vent</Link><Link href="/grief">Grief</Link><Link href="/gratitude/affirmations">Affirmations</Link><Link href="/fun">Smile</Link><Link href="/recover">Restore</Link>
             </nav>
           </div>
         </header>
@@ -37,7 +37,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <footer className="border-t border-line bg-paper-deep">
           <div className="site-container flex flex-col gap-5 py-10 text-sm text-ink-soft sm:flex-row sm:items-center sm:justify-between">
             <p>© 2026 Emotion Center. A place for what you feel.</p>
-            <div className="flex gap-5"><Link href="/">Home</Link><Link href="/grief">Grief</Link><Link href="/vent">Vent</Link></div>
+            <div className="flex flex-wrap gap-5"><Link href="/">Home</Link><Link href="/grief">Grief</Link><Link href="/vent">Vent</Link><Link href="/gratitude/affirmations">Affirmations</Link><Link href="/fun">Smile</Link><Link href="/recover">Restore</Link></div>
           </div>
         </footer>
         </CommunityProvider>

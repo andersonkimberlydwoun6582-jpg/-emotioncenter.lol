@@ -22,8 +22,8 @@ export default function FunPage() {
         <div className="mb-8 flex items-center gap-3"><span className="brand-mark bg-[var(--gold)]"><Smile /></span><div><p className="eyebrow mb-2">Small, clean, harmless</p><h2 className="font-heading text-3xl font-normal sm:text-5xl">A few jokes for the road.</h2></div></div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">{jokes.map(([setup, punchline]) => <article className="joke-card" key={setup}><p>{setup}</p><p>{punchline}</p></article>)}</div>
       </section>
-      <Composer buttonLabel="Share this smile" category="shared-smile" channel="fun" prompt="What made you smile today?" />
-      <CommunityFeed channel="fun" title="Little things people found funny" />
+      <Composer buttonLabel="Save this smile" category="shared-smile" channel="fun" prompt="What made you smile today?" />
+      <CommunityFeed channel="fun" title="Little things worth smiling about" />
       <EmotionLinks current="fun" />
       <SafetyNote />
     </div>

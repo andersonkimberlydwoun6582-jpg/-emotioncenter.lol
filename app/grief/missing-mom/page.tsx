@@ -13,7 +13,7 @@ export default function MissingMomPage() {
         <p>There are people here who understand that sentence without asking you to make it smaller.</p>
       </EditorialSection>
 
-      <div id="write"><Composer buttonLabel="Send this letter" category="missing-parent" channel="grief" prompt="What would you say to her today?" /></div>
+      <div id="write"><Composer buttonLabel="Save this letter" category="missing-parent" channel="grief" prompt="What would you say to her today?" /></div>
 
       <EditorialSection eyebrow="There is no correct timeline" title="Missing her can become part of how you live.">
         <p>It can be light as a sigh, then suddenly heavy in the grocery aisle because you see the brand she always bought. That is not proof that you failed to move on. It is one of the ways a person remains woven into your life.</p>

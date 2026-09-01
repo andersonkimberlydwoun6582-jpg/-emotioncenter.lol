@@ -2,12 +2,14 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowLeft, ArrowRight, CalendarDays, EyeOff, Heart, MessageCircle, Send, Share2, Shuffle, Sparkles, TrendingUp, Users } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CalendarDays, EyeOff, Heart, MessageCircle, Send, Share2, Shuffle, Sparkles, Trash2, TrendingUp, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { type Channel, type CommunityPost, type ReactionKey } from '@/lib/community-data';
 import { routeFor, useCommunity } from '@/components/community-store';
+import { CloudBackupPanel } from '@/components/cloud-backup-panel';
+import { deleteDraftEverywhere } from '@/lib/cloud-backup';
 
 const dateFormat = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 
@@ -59,27 +61,29 @@ export function Composer({ channel, category = 'general', prompt, buttonLabel }:
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
 
-  function submit(event: React.FormEvent) {
+  async function submit(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
     if (title.trim().length < 4 || content.trim().length < 12) {
       setError('Add a short title and a few more words before sharing.');
       return;
     }
-    const post = addPost({ channel, category, title: title.trim(), content: content.trim() });
-    window.location.assign(routeFor(channel, post.id));
+    try {
+      const post = await addPost({ channel, category, title: title.trim(), content: content.trim() });
+      window.location.assign(routeFor(channel, post.id));
+    } catch {
+      setError('This browser could not save the note. Check private-browsing storage settings and try again.');
+    }
   }
 
   return (
     <form className={`composer composer-${channel}`} onSubmit={submit}>
-      <div><p className="eyebrow mb-3">Share without a profile</p><h2 className="font-heading text-3xl font-normal tracking-tight sm:text-4xl">{prompt}</h2></div>
-      <label className="field-label">Give your words a title
-        <Input aria-label="Title" className="mt-2 h-11 bg-white/50 px-4" maxLength={100} onChange={(event) => setTitle(event.target.value)} placeholder={copy.titlePlaceholder} value={title} />
-      </label>
-      <label className="field-label">Your words
-        <Textarea aria-label="Your words" className="mt-2 min-h-40 resize-y bg-white/50 p-4 leading-7" maxLength={3000} onChange={(event) => setContent(event.target.value)} placeholder={copy.bodyPlaceholder} value={content} />
-      </label>
+      <div><p className="eyebrow mb-3">Write without a profile</p><h2 className="font-heading text-3xl font-normal tracking-tight sm:text-4xl">{prompt}</h2></div>
+      <label className="field-label" htmlFor={`${channel}-post-title`}>Give your words a title</label>
+      <Input className="h-11 bg-white/50 px-4" id={`${channel}-post-title`} maxLength={100} onChange={(event) => setTitle(event.target.value)} placeholder={copy.titlePlaceholder} value={title} />
+      <label className="field-label" htmlFor={`${channel}-post-content`}>Your words</label>
+      <Textarea className="min-h-40 resize-y bg-white/50 p-4 leading-7" id={`${channel}-post-content`} maxLength={3000} onChange={(event) => setContent(event.target.value)} placeholder={copy.bodyPlaceholder} value={content} />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-xs leading-5 text-ink-soft">Saved only in this browser. Avoid names, addresses, workplaces, or other identifying details.</p>
+        <p className="text-xs leading-5 text-ink-soft">Private to this browser unless you choose an encrypted backup. Avoid names, addresses, workplaces, or identifying details.</p>
         <Button className="h-11 rounded-full px-5" type="submit"><Send /> {buttonLabel}</Button>
       </div>
       {error && <p className="text-sm text-red-700" role="alert">{error}</p>}
@@ -87,7 +91,7 @@ export function Composer({ channel, category = 'general', prompt, buttonLabel }:
   );
 }
 
-export function CommunityFeed({ channel, category, limit = 8, title = 'Recent words from the community' }: { channel: Channel; category?: string; limit?: number; title?: string }) {
+export function CommunityFeed({ channel, category, limit = 8, title = 'Words in this space' }: { channel: Channel; category?: string; limit?: number; title?: string }) {
   const { posts, hiddenPostIds } = useCommunity();
   const [sort, setSort] = useState<'recent' | 'top' | 'random'>('recent');
   const [randomSeed, setRandomSeed] = useState(1);
@@ -107,7 +111,7 @@ export function CommunityFeed({ channel, category, limit = 8, title = 'Recent wo
   return (
     <section className="content-section community-feed">
       <div className="feed-heading">
-        <div><p className="eyebrow mb-3">You are not the only one</p><h2 className="font-heading text-3xl font-normal tracking-tight sm:text-4xl">{title}</h2></div>
+        <div><p className="eyebrow mb-3">Examples and your private notes</p><h2 className="font-heading text-3xl font-normal tracking-tight sm:text-4xl">{title}</h2></div>
         <div className="feed-filters" aria-label="Sort posts">
           <button aria-pressed={sort === 'recent'} onClick={() => chooseSort('recent')} type="button"><CalendarDays /> Recent</button>
           <button aria-pressed={sort === 'top'} onClick={() => chooseSort('top')} type="button"><TrendingUp /> Top</button>
@@ -142,7 +146,7 @@ export function EmotionLinks({ current }: { current: Channel }) {
 }
 
 export function PostDetail({ id, expectedChannel }: { id: string; expectedChannel: Channel }) {
-  const { posts, hydrated, hiddenPostIds, addResponse, hidePost } = useCommunity();
+  const { posts, hydrated, hiddenPostIds, addResponse, hidePost, deletePost } = useCommunity();
   const copy = channelCopy[expectedChannel];
   const post = posts.find((item) => item.id === id && item.channel === expectedChannel && !hiddenPostIds.includes(item.id));
   const [response, setResponse] = useState('');
@@ -152,7 +156,7 @@ export function PostDetail({ id, expectedChannel }: { id: string; expectedChanne
   useEffect(() => { if (post) document.title = `${post.title} — Emotion Center`; }, [post]);
 
   if (!post && !hydrated) return <main className="site-container min-h-[60vh] py-24"><p className="text-ink-soft">Opening this note…</p></main>;
-  if (!post) return <main className="site-container min-h-[60vh] py-24"><p className="eyebrow mb-4">Not found</p><h1 className="section-title">This note is no longer here.</h1><Link className="mt-8 inline-flex items-center gap-2 font-semibold" href={copy.backHref}><ArrowLeft /> Back to the community</Link></main>;
+  if (!post) return <main className="site-container min-h-[60vh] py-24"><p className="eyebrow mb-4">Not found</p><h1 className="section-title">This note is no longer here.</h1><Link className="mt-8 inline-flex items-center gap-2 font-semibold" href={copy.backHref}><ArrowLeft /> Back to this channel</Link></main>;
 
   async function share() {
     try {
@@ -162,7 +166,7 @@ export function PostDetail({ id, expectedChannel }: { id: string; expectedChanne
     } catch { setShared(false); }
   }
 
-  function respond(event: React.FormEvent) {
+  function respond(event: React.SyntheticEvent<HTMLFormElement>) {
     event.preventDefault();
     if (response.trim().length < 2) { setResponseError('Write at least a couple of words.'); return; }
     addResponse(post!.id, response.trim());
@@ -170,9 +174,24 @@ export function PostDetail({ id, expectedChannel }: { id: string; expectedChanne
     setResponseError('');
   }
 
-  function hide() {
-    hidePost(post!.id);
-    window.location.assign(copy.backHref);
+  async function hide() {
+    try {
+      await hidePost(post!.id);
+      window.location.assign(copy.backHref);
+    } catch {
+      setResponseError('This browser could not update the hidden-notes list.');
+    }
+  }
+
+  async function remove() {
+    if (!window.confirm('Permanently delete this note from this browser and its encrypted cloud copy, if one exists?')) return;
+    try {
+      await deleteDraftEverywhere(post!.id);
+      await deletePost(post!.id);
+      window.location.assign(copy.backHref);
+    } catch (caught) {
+      setResponseError(caught instanceof Error ? caught.message : 'This note could not be deleted.');
+    }
   }
 
   return (
@@ -186,7 +205,9 @@ export function PostDetail({ id, expectedChannel }: { id: string; expectedChanne
         <div className="article-actions">
           <Button className="rounded-full" onClick={share} variant="outline"><Share2 /> {shared ? 'Link copied' : 'Share'}</Button>
           <Button className="rounded-full" onClick={hide} variant="ghost"><EyeOff /> Hide this note</Button>
+          {post.isMine && <Button className="rounded-full" onClick={remove} variant="ghost"><Trash2 /> Delete everywhere</Button>}
         </div>
+        {post.isMine && <CloudBackupPanel post={post} />}
 
         <section className="responses" id="responses">
           <p className="eyebrow mb-3">Notes · {post.responses.length}</p>
