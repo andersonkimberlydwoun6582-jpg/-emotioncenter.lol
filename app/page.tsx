@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ArrowRight, Feather, Flame, Heart, Sparkles } from 'lucide-react';
+import { HomeInsights } from '@/components/home-insights';
 
 export const metadata: Metadata = { alternates: { canonical: '/' } };
 
@@ -30,7 +31,13 @@ export default function Home() {
       </section>
 
       <section className="site-container relative z-20 -mt-8 pb-24">
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <HomeInsights />
+
+        <div className="home-door-heading">
+          <p className="eyebrow mb-3">Write what is here now</p>
+          <h2>Choose a place to begin.</h2>
+        </div>
+        <div className="home-door-grid grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           {doors.map((door) => {
             const Icon = door.icon;
             return (
@@ -56,7 +63,7 @@ export default function Home() {
 
         <div className="privacy-note mt-20">
           <div className="privacy-dot" />
-          <div><p className="font-semibold text-ink">Your words, at your pace.</p><p className="mt-1 text-sm leading-6 text-ink-soft">What you write is stored only in this browser. No name or email is requested.</p></div>
+          <div><p className="font-semibold text-ink">Private to this browser.</p><p className="mt-1 text-sm leading-6 text-ink-soft">What you write is stored only on this device. No name or email is requested.</p></div>
         </div>
       </section>
     </main>
