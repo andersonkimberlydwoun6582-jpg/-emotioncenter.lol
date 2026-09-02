@@ -404,15 +404,76 @@ html[data-emotion='fun'] .joke-card:nth-child(even):hover { transform: rotate(-1
 .recovery-success p { color: var(--ink-soft); }
 .recovery-success .primary-link { justify-self: start; }
 
+/* A private home that remembers */
+.home-insights { position: relative; padding: clamp(1.4rem, 4vw, 2.5rem); border: 1px solid rgba(34,49,46,.18); border-radius: 18px 26px 16px 24px; background: rgba(255,253,248,.94); box-shadow: 8px 10px 0 rgba(72,55,39,.08), 0 24px 55px rgba(66,50,35,.08); }
+.home-insights::before { content: ''; position: absolute; width: 5.5rem; height: 1.25rem; top: -.65rem; left: 12%; background: rgba(240,218,166,.68); transform: rotate(-1.5deg); }
+.home-insights-loading { min-height: 250px; display: grid; align-content: center; }
+.home-insights-loading h2, .home-insights-heading h2 { font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 400; letter-spacing: -.035em; }
+.home-insights-loading > p:last-child, .home-insights-heading > div:first-child > p:last-child { margin-top: .7rem; color: var(--ink-soft); }
+.home-insights-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 2rem; }
+.streak-note { min-width: min(100%, 260px); display: flex; align-items: center; gap: 1rem; padding: 1rem 1.1rem; border: 1px dashed rgba(34,49,46,.28); border-radius: 14px 9px 16px 10px; background: var(--gold-wash); }
+.streak-note strong { flex: none; font-family: var(--font-heading); font-size: 2.4rem; font-weight: 400; line-height: 1; }
+.streak-note span { color: var(--ink-soft); font-size: .82rem; line-height: 1.5; }
+.insights-layout { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(230px, .7fr); gap: 1rem; margin-top: 2rem; }
+.mood-calendar-card, .recall-card { border: 1px solid rgba(34,49,46,.14); border-radius: 18px 12px 20px 14px; background: var(--paper-light); }
+.mood-calendar-card { padding: clamp(1rem, 3vw, 1.6rem); }
+.mood-calendar-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.mood-calendar-heading > div { display: flex; align-items: center; gap: .75rem; }
+.mood-calendar-heading svg { width: 1.3rem; color: #8b7140; }
+.mood-calendar-heading h3, .recall-card h3 { font-family: var(--font-heading); font-size: 1.45rem; font-weight: 400; }
+.mood-calendar-heading p { color: var(--ink-soft); font-size: .72rem; }
+.mood-calendar-heading > a { color: var(--ink-soft); font-size: .75rem; font-weight: 800; text-decoration: underline; text-underline-offset: .2rem; }
+.mood-calendar-scroll { margin-top: 1.2rem; overflow-x: auto; }
+.mood-calendar { width: min(100%, 460px); border-collapse: separate; border-spacing: .32rem; table-layout: fixed; }
+.mood-calendar th { padding-bottom: .25rem; color: var(--ink-soft); font-size: .66rem; font-weight: 800; text-align: center; }
+.mood-calendar abbr { text-decoration: none; }
+.mood-calendar td { width: 14.285%; }
+.mood-day { width: 100%; aspect-ratio: 1; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(34,49,46,.12); border-radius: 7px 4px 8px 5px; color: rgba(34,49,46,.78); font-size: .64rem; transition: transform .16s ease, box-shadow .16s ease; }
+a.mood-day:hover, a.mood-day:focus-visible { position: relative; z-index: 1; transform: scale(1.13); box-shadow: 0 5px 12px rgba(34,49,46,.18); outline: 2px solid var(--ink); outline-offset: 2px; }
+.mood-day-empty { background: #f0eee7; color: rgba(34,49,46,.36); }
+.mood-day-empty.is-future { opacity: .38; }
+.mood-day-gold { background: #ecd78d; }
+.mood-day-green { background: #a8cfab; }
+.mood-day-blue { background: #aebfcd; }
+.mood-day-red { background: #e7a39b; }
+.mood-day-mixed { background: #c4add2; }
+.mood-day-unmarked { background: #ded9cf; border-style: dashed; }
+.mood-legend { display: flex; flex-wrap: wrap; gap: .55rem 1rem; margin-top: 1rem; color: var(--ink-soft); font-size: .68rem; }
+.mood-legend span { display: inline-flex; align-items: center; gap: .35rem; }
+.mood-legend i { width: .7rem; height: .7rem; border-radius: 3px; }
+.legend-gold { background: #ecd78d; }
+.legend-green { background: #a8cfab; }
+.legend-blue { background: #aebfcd; }
+.legend-red { background: #e7a39b; }
+.legend-mixed { background: #c4add2; }
+.recall-card { align-self: stretch; display: flex; flex-direction: column; align-items: flex-start; padding: clamp(1.2rem, 3vw, 1.8rem); background: var(--blue-wash); }
+.recall-card h3 { margin-top: .7rem; font-size: 1.8rem; }
+.recall-card > p:not(.eyebrow) { margin-top: .8rem; color: var(--ink-soft); font-size: .88rem; line-height: 1.65; }
+.recall-card button { margin-top: auto; padding-top: .75rem; padding-bottom: .75rem; }
+.recall-card small { margin-top: .65rem; color: var(--ink-soft); font-size: .7rem; line-height: 1.5; }
+.recall-dialog { gap: 1.25rem; padding: clamp(1.4rem, 4vw, 2.2rem); border-radius: 22px 14px 24px 16px; background: var(--paper-light); box-shadow: 10px 14px 0 rgba(30,40,37,.18), 0 35px 90px rgba(20,28,26,.3); }
+.recall-dialog [data-slot='dialog-title'] { font-size: clamp(1.8rem, 5vw, 2.8rem); line-height: 1.08; font-weight: 400; }
+.recall-body { white-space: pre-wrap; color: var(--ink-soft); font-size: 1rem; line-height: 1.8; }
+.recall-emotions { display: flex; flex-wrap: wrap; gap: .45rem; }
+.recall-emotions span { padding: .45rem .65rem; border: 1px solid rgba(34,49,46,.14); border-radius: 999px; background: rgba(255,255,255,.5); font-size: .72rem; font-weight: 700; }
+.home-door-heading { margin-top: clamp(3rem, 7vw, 5.5rem); }
+.home-door-heading h2 { font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 400; }
+.home-door-grid { margin-top: 1.5rem; }
+.home-door-grid .emotion-door { min-height: 290px; }
+
 /* One simple place for every private entry */
 .my-notes-page { min-height: 72vh; padding-block: clamp(4rem, 8vw, 7rem); }
 .my-notes-heading > p:last-child { display: flex; align-items: center; gap: .5rem; margin-top: 1rem; color: var(--ink-soft); }
 .my-notes-heading svg { width: 1rem; }
 .my-notes-loading { margin-top: 3rem; color: var(--ink-soft); }
-.my-notes-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 3rem; }
+.my-notes-groups { display: grid; gap: 3rem; margin-top: 3rem; }
+.my-notes-date-group { scroll-margin-top: 1.5rem; padding: 1rem; border: 1px solid transparent; border-radius: 1.2rem; }
+.my-notes-date-group > h2 { font-family: var(--font-heading); font-size: 1.7rem; font-weight: 400; }
+.my-notes-date-group.is-selected { border-color: rgba(139,113,64,.35); animation: note-date-highlight 2.4s ease-out; }
+.my-notes-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1rem; }
 .my-note-card { min-height: 260px; display: flex; flex-direction: column; padding: 1.4rem; border: 1px dashed rgba(34,49,46,.3); border-radius: 1.2rem; background: rgba(255,253,248,.74); color: var(--ink); transition: transform .2s ease, background .2s ease; }
 .my-note-card:hover { transform: translateY(-3px); background: var(--paper-light); }
-.my-note-card h2 { margin-top: .8rem; font-family: var(--font-heading); font-size: 1.55rem; line-height: 1.15; font-weight: 400; }
+.my-note-card h3 { margin-top: .8rem; font-family: var(--font-heading); font-size: 1.55rem; line-height: 1.15; font-weight: 400; }
 .my-note-card > p { display: -webkit-box; margin-top: .8rem; overflow: hidden; color: var(--ink-soft); line-height: 1.6; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
 .my-note-card strong { display: inline-flex; align-items: center; gap: .4rem; margin-top: auto; padding-top: 1.5rem; font-size: .78rem; }
 .my-note-card strong svg { width: .9rem; }
@@ -421,9 +482,19 @@ html[data-emotion='fun'] .joke-card:nth-child(even):hover { transform: rotate(-1
 .my-notes-empty > p { margin-top: .5rem; color: var(--ink-soft); }
 .my-notes-empty > div { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.3rem; }
 .my-notes-empty a { padding: .6rem .85rem; border-radius: 999px; background: var(--ink); color: var(--paper-light); font-size: .78rem; font-weight: 800; }
+.my-notes-date-empty { margin-top: 2rem; padding: 1rem; border: 1px dashed rgba(34,49,46,.3); border-radius: .9rem; background: var(--gold-wash); color: var(--ink-soft); }
+.my-notes-date-empty a { color: var(--ink); font-weight: 800; text-decoration: underline; text-underline-offset: .2rem; }
+@keyframes note-date-highlight { 0% { background: rgba(236,215,141,.55); box-shadow: 0 0 0 5px rgba(236,215,141,.22); } 100% { background: transparent; box-shadow: 0 0 0 0 transparent; } }
 
 @media (max-width: 720px) {
   .site-header .site-container { gap: .75rem; }
   .brand > span:last-child { display: none; }
+  .home-insights-heading { flex-direction: column; }
+  .streak-note { width: 100%; }
+  .insights-layout { grid-template-columns: 1fr; }
+  .recall-card button { margin-top: 1.5rem; }
+  .mood-calendar { min-width: 300px; }
   .my-notes-grid { grid-template-columns: 1fr; }
 }
+
+@media (prefers-reduced-motion: reduce) { .my-notes-date-group.is-selected { animation: none; background: rgba(236,215,141,.28); } }
