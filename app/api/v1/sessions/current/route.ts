@@ -3,6 +3,18 @@ import { getDb } from '@/lib/server/db';
 import { eventStatement } from '@/lib/server/events';
 import { assertSameOrigin, clearSessionCookie, jsonError, noStoreHeaders } from '@/lib/server/http';
 
+export async function GET(request: Request) {
+  try {
+    const session = await requireSession(request);
+    return Response.json({
+      identity_id: session.identityId,
+      credential_id: session.credentialId,
+    }, { headers: noStoreHeaders() });
+  } catch (error) {
+    return jsonError(error);
+  }
+}
+
 export async function DELETE(request: Request) {
   try {
     assertSameOrigin(request);
