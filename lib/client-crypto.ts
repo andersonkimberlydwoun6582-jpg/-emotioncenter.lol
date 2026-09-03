@@ -40,21 +40,35 @@ async function aesDecrypt(keyBytes: Uint8Array, iv: Uint8Array, aad: string, cip
 }
 
 export async function createRecoveryBundle() {
+  const identityKey = crypto.getRandomValues(new Uint8Array(32));
+  const credential = await createRecoveryCredential(encodeBase64Url(identityKey));
+  return {
+    recoveryCode: credential.recoveryCode,
+    credentialId: credential.credentialId,
+    enrollment: credential.enrollment,
+    identityKey: encodeBase64Url(identityKey),
+  };
+}
+
+export async function createRecoveryCredential(identityKeyText: string) {
+  const identityKey = decodeBase64Url(identityKeyText);
+  if (identityKey.byteLength !== 32) throw new Error('The unlocked backup key is not valid.');
   const credentialId = crypto.getRandomValues(new Uint8Array(16));
   const recoverySecret = crypto.getRandomValues(new Uint8Array(32));
-  const identityKey = crypto.getRandomValues(new Uint8Array(32));
   const credentialIdText = encodeBase64Url(credentialId);
   const secretText = encodeBase64Url(recoverySecret);
   const authToken = await derive(recoverySecret, credentialId, 'emotioncenter/auth/v1');
   const wrapKey = await derive(recoverySecret, credentialId, 'emotioncenter/wrap/v1');
   const wrapIv = crypto.getRandomValues(new Uint8Array(12));
   const wrappedIdentityKey = await aesEncrypt(wrapKey, wrapIv, `emotioncenter:identity-wrap:v1:${credentialIdText}`, identityKey);
+  const localCheck = await aesDecrypt(wrapKey, wrapIv, `emotioncenter:identity-wrap:v1:${credentialIdText}`, wrappedIdentityKey);
+  if (!equalBytes(localCheck, identityKey)) throw new Error('The new recovery code could not be verified.');
   const prefix = `ecr1.${credentialIdText}.${secretText}`;
   const checksum = encodeBase64Url((await digest(encoder.encode(prefix))).slice(0, 6));
   return {
     recoveryCode: `${prefix}.${checksum}`,
-    identityKey: encodeBase64Url(identityKey),
     credentialId: credentialIdText,
+    wrapKey,
     enrollment: {
       credential_id: credentialIdText,
       auth_token: encodeBase64Url(authToken),
@@ -64,6 +78,29 @@ export async function createRecoveryBundle() {
       crypto_version: 1,
     },
   };
+}
+
+export async function verifyRecoveryCredential(
+  identityKeyText: string,
+  credentialId: string,
+  wrapKey: Uint8Array,
+  wrapped: { wrap_iv: string; wrapped_identity_key: string },
+) {
+  const expectedIdentityKey = decodeBase64Url(identityKeyText);
+  const unwrappedIdentityKey = await aesDecrypt(
+    wrapKey,
+    decodeBase64Url(wrapped.wrap_iv),
+    `emotioncenter:identity-wrap:v1:${credentialId}`,
+    decodeBase64Url(wrapped.wrapped_identity_key),
+  );
+  return equalBytes(unwrappedIdentityKey, expectedIdentityKey);
+}
+
+function equalBytes(left: Uint8Array, right: Uint8Array) {
+  if (left.byteLength !== right.byteLength) return false;
+  let difference = 0;
+  for (let index = 0; index < left.byteLength; index += 1) difference |= left[index] ^ right[index];
+  return difference === 0;
 }
 
 export async function parseRecoveryCode(code: string) {

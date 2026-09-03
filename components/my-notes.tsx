@@ -2,6 +2,7 @@
 
 import { ArrowRight, LockKeyhole } from 'lucide-react';
 import { useEffect, useMemo } from 'react';
+import { BackupManager } from '@/components/backup-manager';
 import { routeFor, useCommunity } from '@/components/community-store';
 import { localDateKey } from '@/lib/note-insights';
 
@@ -49,6 +50,8 @@ export function MyNotes({ selectedDate }: { selectedDate?: string }) {
           <h1 className="section-title">My notes</h1>
           <p><LockKeyhole /> Everything you saved privately is collected here.</p>
         </div>
+
+        {hydrated ? <BackupManager firstNoteHref={notes[0] ? routeFor(notes[0].channel, notes[0].id) : undefined} /> : null}
 
         {!hydrated ? <p className="my-notes-loading">Opening your notes…</p> : notes.length ? (
           <>

@@ -465,6 +465,31 @@ a.mood-day:hover, a.mood-day:focus-visible { position: relative; z-index: 1; tra
 .my-notes-page { min-height: 72vh; padding-block: clamp(4rem, 8vw, 7rem); }
 .my-notes-heading > p:last-child { display: flex; align-items: center; gap: .5rem; margin-top: 1rem; color: var(--ink-soft); }
 .my-notes-heading svg { width: 1rem; }
+.backup-manager { display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; margin-top: 2rem; padding: 1.15rem 1.25rem; border: 1px dashed rgba(34,49,46,.3); border-radius: 16px 11px 18px 12px; background: rgba(255,253,248,.7); }
+.backup-manager-copy { display: flex; align-items: center; gap: .85rem; }
+.backup-manager-copy h2 { margin-top: .15rem; font-family: var(--font-heading); font-size: 1.35rem; font-weight: 400; }
+.backup-manager-copy > div > p:last-child { margin-top: .25rem; color: var(--ink-soft); font-size: .78rem; }
+.backup-manager-icon { display: grid; width: 2.35rem; height: 2.35rem; flex: none; place-items: center; border: 1px solid rgba(34,49,46,.25); border-radius: 50%; background: var(--gold-wash); }
+.backup-manager-icon svg, .backup-manager-status svg, .backup-manager-link svg { width: 1rem; }
+.backup-manager-status, .backup-manager-link { display: inline-flex; flex: none; align-items: center; gap: .45rem; color: var(--ink-soft); font-size: .78rem; font-weight: 800; }
+.backup-manager-link { padding: .7rem .95rem; border-radius: 999px; background: var(--ink); color: var(--paper-light); }
+.backup-manager-locked { display: flex; flex: none; align-items: center; gap: .7rem; }
+.backup-manager-locked > a { color: var(--ink-soft); font-size: .76rem; font-weight: 800; text-decoration: underline; text-underline-offset: .2rem; }
+.backup-manager-error { color: #9f342b; font-size: .8rem; line-height: 1.5; }
+.recovery-rotation-dialog { gap: 1.1rem; padding: clamp(1.4rem, 4vw, 2rem); border-radius: 22px 14px 24px 16px; background: var(--paper-light); box-shadow: 10px 14px 0 rgba(30,40,37,.18), 0 35px 90px rgba(20,28,26,.3); }
+.recovery-rotation-dialog [data-slot='dialog-title'] { font-family: var(--font-heading); font-size: 1.65rem; font-weight: 400; line-height: 1.15; }
+.recovery-rotation-progress { display: grid; justify-items: center; gap: 1rem; padding: 1.5rem; text-align: center; }
+.recovery-rotation-progress > svg { width: 2rem; height: 2rem; color: #8b7140; }
+.recovery-rotation-check, .recovery-rotation-alert { width: 2.5rem; height: 2.5rem; }
+.recovery-rotation-check { color: #3f6d57; }
+.recovery-rotation-alert { color: #9f342b; }
+.recovery-code-warning { padding: .8rem; border: 1px solid rgba(158,70,57,.38); border-radius: .7rem; background: #fff0df; color: #7f2d26 !important; font-weight: 800; }
+.recovery-rotation-code { overflow-wrap: anywhere; padding: 1rem; border: 1px dashed rgba(34,49,46,.35); border-radius: .6rem; background: white; font-size: .78rem; line-height: 1.7; user-select: all; }
+.recovery-copy-button { justify-self: start; }
+.recovery-revoke-warning { display: grid; grid-template-columns: auto 1fr; gap: .75rem; padding: 1rem; border-radius: .8rem; background: #fff0df; color: #7f2d26; }
+.recovery-revoke-warning > svg { width: 1.2rem; }
+.recovery-revoke-warning p { margin-top: .2rem; font-size: .78rem; }
+.recovery-revoke-warning button { grid-column: 2; justify-self: start; }
 .my-notes-loading { margin-top: 3rem; color: var(--ink-soft); }
 .my-notes-groups { display: grid; gap: 3rem; margin-top: 3rem; }
 .my-notes-date-group { scroll-margin-top: 1.5rem; padding: 1rem; border: 1px solid transparent; border-radius: 1.2rem; }
@@ -495,6 +520,8 @@ a.mood-day:hover, a.mood-day:focus-visible { position: relative; z-index: 1; tra
   .recall-card button { margin-top: 1.5rem; }
   .mood-calendar { min-width: 300px; }
   .my-notes-grid { grid-template-columns: 1fr; }
+  .backup-manager { align-items: stretch; flex-direction: column; }
+  .backup-manager-locked { align-items: flex-start; flex-direction: column; }
 }
 
 @media (prefers-reduced-motion: reduce) { .my-notes-date-group.is-selected { animation: none; background: rgba(236,215,141,.28); } }
