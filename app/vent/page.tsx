@@ -2,10 +2,34 @@ import type { Metadata } from 'next';
 import { ChannelHero, EditorialSection, SafetyNote } from '@/components/page-sections';
 import { CommunityFeed, Composer, EmotionLinks } from '@/components/community';
 
-export const metadata: Metadata = { title: 'Vent to Strangers Online — Get It Off Your Chest', description: 'Angry, frustrated, done? Let it out anonymously and read rants from others who feel the same. No sign-up, no judgment.', alternates: { canonical: '/vent' } };
+const title = 'Vent to Strangers Online — Get It Off Your Chest';
+const description = 'Angry, frustrated, done? Let it out anonymously and read rants from others who feel the same. No sign-up, no judgment.';
+const pageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  description,
+  url: 'https://emotioncenter.lol/vent',
+  isPartOf: { '@type': 'WebSite', name: 'Emotion Center', url: 'https://emotioncenter.lol' },
+};
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical: '/vent' },
+  openGraph: {
+    title,
+    description,
+    url: 'https://emotioncenter.lol/vent',
+    type: 'website',
+    images: [{ url: '/og.png', width: 1733, height: 907, alt: 'Emotion Center — A place for every feeling.' }],
+  },
+  twitter: { card: 'summary_large_image', title, description, images: ['/og.png'] },
+};
 
 export default function VentPage() {
   return <main>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }} />
     <ChannelHero tone="vent" eyebrow="Anonymous venting" title="Get it off your chest." description="You have been holding it in all day. Maybe all year. Put it here instead—without using your name or making the situation messier." href="#write" action="Start venting" />
     <div className="site-container content-main">
       <EditorialSection eyebrow="You have held it long enough" title="Say what you actually think.">

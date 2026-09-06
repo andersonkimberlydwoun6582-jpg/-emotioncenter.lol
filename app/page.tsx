@@ -2,7 +2,24 @@ import type { Metadata } from 'next';
 import { ArrowRight, Feather, Flame, Heart, Sparkles } from 'lucide-react';
 import { HomeInsights } from '@/components/home-insights';
 
-export const metadata: Metadata = { alternates: { canonical: '/' } };
+const description = 'Vent your anger, share your grief, find a kind word, or take a moment to smile. Free, anonymous, no sign-up.';
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: 'Emotion Center — A Safe Space for Every Emotion',
+    description,
+    url: 'https://emotioncenter.lol',
+    type: 'website',
+    images: [{ url: '/og.png', width: 1733, height: 907, alt: 'Emotion Center — A place for every feeling.' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Emotion Center — A Safe Space for Every Emotion',
+    description,
+    images: ['/og.png'],
+  },
+};
 
 const doors = [
   { href: '/vent', eyebrow: 'Anger', title: "I'm angry", copy: 'Say the thing you cannot say anywhere else.', action: 'Let it out', icon: Flame, tone: 'door-coral' },

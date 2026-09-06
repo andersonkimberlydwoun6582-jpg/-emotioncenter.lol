@@ -2,10 +2,34 @@ import type { Metadata } from 'next';
 import { ChannelHero, EditorialSection, SafetyNote, TopicLinks } from '@/components/page-sections';
 import { CommunityFeed, Composer, EmotionLinks } from '@/components/community';
 
-export const metadata: Metadata = { title: 'Grief Support Online — Share Your Loss, Anonymously', description: "Grieving someone you lost? Write them a letter, read others' stories, and feel less alone. Free, anonymous, no account needed.", alternates: { canonical: '/grief' } };
+const title = 'Grief Support Online — Share Your Loss, Anonymously';
+const description = "Grieving someone you lost? Write them a letter, read others' stories, and feel less alone. Free, anonymous, no account needed.";
+const pageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  description,
+  url: 'https://emotioncenter.lol/grief',
+  isPartOf: { '@type': 'WebSite', name: 'Emotion Center', url: 'https://emotioncenter.lol' },
+};
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical: '/grief' },
+  openGraph: {
+    title,
+    description,
+    url: 'https://emotioncenter.lol/grief',
+    type: 'website',
+    images: [{ url: '/og.png', width: 1733, height: 907, alt: 'Emotion Center — A place for every feeling.' }],
+  },
+  twitter: { card: 'summary_large_image', title, description, images: ['/og.png'] },
+};
 
 export default function GriefPage() {
   return <main>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }} />
     <ChannelHero tone="grief" eyebrow="Grief & remembrance" title="You're grieving. You're not alone." description="Whether it was yesterday or ten years ago, grief does not follow a calendar. Write a letter to the one you lost, or read words from people who understand." href="#write" action="Write a letter" />
     <div className="site-container content-main">
       <EditorialSection eyebrow="A place that does not rush you" title="No one teaches us how to grieve.">

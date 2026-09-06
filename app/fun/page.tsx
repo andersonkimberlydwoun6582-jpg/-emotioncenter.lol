@@ -3,7 +3,30 @@ import { Smile } from 'lucide-react';
 import { CommunityFeed, Composer, EmotionLinks } from '@/components/community';
 import { ChannelHero, SafetyNote } from '@/components/page-sections';
 
-export const metadata: Metadata = { title: 'A Little Something to Make You Smile', description: 'Light, clean jokes for when you need a break. No deep thoughts required.', alternates: { canonical: '/fun' } };
+const title = 'A Little Something to Make You Smile';
+const description = 'Light, clean jokes for when you need a break. No deep thoughts required.';
+const pageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  description,
+  url: 'https://emotioncenter.lol/fun',
+  isPartOf: { '@type': 'WebSite', name: 'Emotion Center', url: 'https://emotioncenter.lol' },
+};
+
+export const metadata: Metadata = {
+  title,
+  description,
+  alternates: { canonical: '/fun' },
+  openGraph: {
+    title,
+    description,
+    url: 'https://emotioncenter.lol/fun',
+    type: 'website',
+    images: [{ url: '/og.png', width: 1733, height: 907, alt: 'Emotion Center — A place for every feeling.' }],
+  },
+  twitter: { card: 'summary_large_image', title, description, images: ['/og.png'] },
+};
 
 const jokes = [
   ['Why do skeletons avoid arguments?', "They don't have the guts."],
@@ -16,6 +39,7 @@ const jokes = [
 
 export default function FunPage() {
   return <main>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pageSchema) }} />
     <ChannelHero tone="fun" eyebrow="One uncomplicated minute" title="Take a breath. Smile if you want to." description="No deep thoughts required. Just a few gentle jokes and a quiet corner away from the heavier stuff." />
     <div className="site-container content-main">
       <section>
