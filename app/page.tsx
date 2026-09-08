@@ -6,7 +6,7 @@ import { HomeEditorialStories } from '@/components/editorial';
 const description = 'Vent your anger, share your grief, find a kind word, or take a moment to smile. Free, anonymous, no sign-up.';
 
 export const metadata: Metadata = {
-  alternates: { canonical: '/' },
+  alternates: { canonical: '/', types: { 'application/rss+xml': '/editorial/feed.xml' } },
   openGraph: {
     title: 'Emotion Center — A Safe Space for Every Emotion',
     description,

@@ -15,6 +15,13 @@ import {
 /* Native navigation matches the rest of the site and remains stable under browser translation. */
 /* oxlint-disable next/no-html-link-for-pages */
 
+const privateWritingLabels: Record<Channel, string> = {
+  grief: 'Write about grief',
+  vent: 'Write what is on your mind',
+  gratitude: 'Write a gratitude note',
+  fun: 'Write down a smile',
+};
+
 function EmotionTags({ post }: { post: CommunityPost }) {
   const emotions = emotionDetails(post);
   if (!emotions.length) return null;
@@ -85,6 +92,10 @@ export function EditorialDetail({ post }: { post: CommunityPost }) {
         <p className="eyebrow">More from this space</p>
         <h2 id="related-stories">Related editorial stories</h2>
         <div className="editorial-related-grid">{related.map((item) => <EditorialCard key={item.id} post={item} />)}</div>
+        <div className="editorial-write-cta">
+          <div><p className="eyebrow">Something on your mind?</p><h2>Write your own — private to this browser.</h2><p>No name, no account.</p></div>
+          <a href={channel.channelPath}>{privateWritingLabels[post.channel]} <ArrowRight aria-hidden="true" /></a>
+        </div>
       </section>
     </main>
   );

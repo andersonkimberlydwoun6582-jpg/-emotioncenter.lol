@@ -494,6 +494,11 @@ a.mood-day:hover, a.mood-day:focus-visible { position: relative; z-index: 1; tra
 .editorial-related > h2 { margin-top: .8rem; font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 400; letter-spacing: -.035em; }
 .editorial-related-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; margin-top: 2rem; }
 .editorial-related .editorial-card { min-height: 280px; }
+.editorial-write-cta { display: flex; align-items: center; justify-content: space-between; gap: 2rem; margin-top: clamp(3rem, 7vw, 5rem); padding: clamp(1.4rem, 4vw, 2.4rem); border: 1px solid rgba(34,49,46,.14); border-radius: 18px 12px 20px 14px; background: #e9e7e1; }
+.editorial-write-cta h2 { margin-top: .65rem; font-family: var(--font-heading); font-size: clamp(1.7rem, 4vw, 2.5rem); font-weight: 400; letter-spacing: -.03em; }
+.editorial-write-cta p:last-child { margin-top: .45rem; color: var(--ink-soft); font-size: .85rem; }
+.editorial-write-cta > a { display: inline-flex; flex: none; align-items: center; gap: .45rem; padding: .75rem 1rem; border: 1px solid rgba(34,49,46,.24); border-radius: 999px; background: rgba(255,253,248,.8); color: var(--ink); font-size: .8rem; font-weight: 800; }
+.editorial-write-cta > a svg { width: 1rem; }
 .home-editorial-library { margin-top: clamp(5rem, 10vw, 9rem); padding-top: clamp(3rem, 6vw, 5rem); border-top: 2px dashed rgba(34,49,46,.18); }
 .home-editorial-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; }
 .home-editorial-heading h2 { margin-top: .65rem; font-family: var(--font-heading); font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 400; letter-spacing: -.04em; }
@@ -515,6 +520,7 @@ a.mood-day:hover, a.mood-day:focus-visible { position: relative; z-index: 1; tra
 @media (max-width: 720px) {
   .editorial-browse-grid, .home-editorial-grid, .editorial-related-grid { grid-template-columns: 1fr; }
   .home-editorial-heading { align-items: flex-start; flex-direction: column; }
+  .editorial-write-cta { align-items: flex-start; flex-direction: column; }
 }
 
 /* One simple place for every private entry */
