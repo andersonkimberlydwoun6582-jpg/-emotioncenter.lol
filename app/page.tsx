@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { ArrowRight, Feather, Flame, Heart, Sparkles } from 'lucide-react';
 import { HomeInsights } from '@/components/home-insights';
+import { HomeEditorialStories } from '@/components/editorial';
 
 const description = 'Vent your anger, share your grief, find a kind word, or take a moment to smile. Free, anonymous, no sign-up.';
 
@@ -69,6 +70,8 @@ export default function Home() {
             );
           })}
         </div>
+
+        <HomeEditorialStories />
 
         <div className="journey-grid mt-24">
           <div><p className="eyebrow mb-4">Why four doors?</p><h2 className="section-title">Feelings rarely arrive alone.</h2></div>

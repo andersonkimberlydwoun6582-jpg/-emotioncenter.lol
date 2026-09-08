@@ -9,6 +9,6 @@ function postPath(channel: string, id: string) {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ['', '/grief', '/grief/missing-mom', '/grief/pet-loss', '/vent', '/vent/anonymous', '/gratitude/affirmations', '/fun', ...seedPosts.map((post) => postPath(post.channel, post.id))];
+  const routes = ['', '/grief', '/grief/browse', '/grief/missing-mom', '/grief/pet-loss', '/vent', '/vent/browse', '/vent/anonymous', '/gratitude/affirmations', '/gratitude/browse', '/fun', '/fun/browse', ...seedPosts.map((post) => postPath(post.channel, post.id))];
   return routes.map((route) => ({ url: `https://emotioncenter.lol${route}`, lastModified: new Date('2026-09-01'), changeFrequency: route === '' ? 'weekly' : 'monthly', priority: route === '' ? 1 : 0.8 }));
 }

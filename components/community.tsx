@@ -12,6 +12,7 @@ import { deleteDraftEverywhere } from '@/lib/cloud-backup';
 import { CHANNEL_PROMPTS } from '@/config/prompts';
 import { EMOTIONS, type EmotionId } from '@/config/emotions';
 import { VoiceInputButton } from '@/components/voice-input-button';
+import { editorialChannels } from '@/lib/editorial';
 
 const dateFormat = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
 
@@ -92,7 +93,7 @@ export function CommunityFeed({ channel, category, limit = 8, title = 'Examples 
   return (
     <section className="content-section community-feed">
       <div className="feed-group examples-group">
-        <div className="feed-heading"><div><p className="eyebrow mb-3">Editorial examples</p><h2 className="font-heading text-3xl font-normal tracking-tight sm:text-4xl">{title}</h2><p className="feed-section-note">Written examples to help you begin. They are not community posts.</p></div></div>
+        <div className="feed-heading"><div><p className="eyebrow mb-3">Editorial examples</p><h2 className="font-heading text-3xl font-normal tracking-tight sm:text-4xl">{title}</h2><p className="feed-section-note">Written examples to help you begin. They are not community posts.</p></div><a className="feed-browse-link" href={editorialChannels[channel].browsePath}>Browse all <ArrowRight aria-hidden="true" /></a></div>
         <div className="post-grid">
           {examples.map((post) => (
             <article className="post-card post-card-example" key={post.id}>
