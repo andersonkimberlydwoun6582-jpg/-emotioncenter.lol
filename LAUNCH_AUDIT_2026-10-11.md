@@ -61,9 +61,9 @@ Verified from an isolated browser context, i.e. the anonymous-visitor view:
 | JSON-LD | one `WebSite` schema, apex URL ✅ |
 | hreflang | none emitted (single-language site) — not a defect |
 | RSS | `/editorial/feed.xml` 200, 9,910 bytes ✅ |
-| Google Analytics | **absent** — correct, no Measurement ID was provided |
+| Google Analytics | **installed** — GA4 `G-JP4PKJ7SQX` rendered from `app/layout.tsx` as a committed constant |
 | Advertising / AdSense | **absent** — correct, ads are disabled by policy |
-| Search Console verification | **absent** — deferred at launch, still not configured |
+| Search Console verification | **configured** — domain property `sc-domain:emotioncenter.lol`; sitemap submitted 2026-10-11 |
 
 ### Page availability
 
@@ -150,7 +150,17 @@ browser, and same-origin `fetch` from within a page is the reliable way to read
 ## Unresolved risks
 
 1. `www` duplicate serving — repair prepared, deployment blocked on the Sites credential.
-2. No Google Search Console verification, so indexing status is unobservable.
+2. Search Console indexing. The domain property is configured and the sitemap was
+   accepted on 2026-10-11. A live URL test of the homepage that day returned
+   "已抓取 - 尚未编入索引" (crawled, not yet indexed): Googlebot smartphone fetched
+   `https://emotioncenter.lol/` successfully at 17:45:30, so crawling is permitted and
+   the fetch succeeded — the earlier `curl` 403 responses were bot protection rejecting
+   non-browser clients and do **not** indicate that Googlebot is blocked. The sitemap row
+   initially reported "无法抓取" with 0 discovered pages; every report in the property
+   also read "正在处理数据，请过 1 天左右再来查看", so that status is expected to settle
+   within about a day. Re-check the sitemap row and the Pages report after that. If the
+   homepage stays uncrawled by choice rather than by fetch failure, the cause is content
+   quality and inbound links, not the deployment.
 3. Community content is stored in the visitor's browser only; it is not a shared,
    cross-device database. A backend, moderation queue, abuse controls, and durable
    storage are still required before treating UGC as a multi-user community. This

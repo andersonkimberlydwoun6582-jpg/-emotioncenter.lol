@@ -10,6 +10,22 @@ import './globals.css';
 
 const geist = Geist({ variable: '--font-geist', subsets: ['latin'] });
 
+/*
+ * Google Analytics 4 measurement ID for this site's property.
+ *
+ * Hardcoded rather than read from the environment on purpose. Runtime
+ * configuration in this project comes from Cloudflare Workers bindings through
+ * getBindings() (see lib/server/db.ts), not from process.env, and the generated
+ * dist/server/wrangler.json carries `"vars": {}`. Reading process.env here would
+ * add a runtime dependency that never resolves to a value.
+ *
+ * The ID is not a secret — it is served in every page's HTML. The tag renders
+ * only while this constant is non-empty, which keeps the launch policy's rule
+ * that analytics ships only once a real Measurement ID exists. Set it to an
+ * empty string to suppress analytics entirely.
+ */
+const GA_MEASUREMENT_ID = 'G-JP4PKJ7SQX';
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://emotioncenter.lol'),
   title: { default: 'Emotion Center — A Safe Space for Every Emotion', template: '%s — Emotion Center' },
@@ -21,6 +37,22 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head>
+        {GA_MEASUREMENT_ID ? (
+          <>
+            <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
+            <script
+              dangerouslySetInnerHTML={{
+                __html:
+                  'window.dataLayer = window.dataLayer || [];' +
+                  'function gtag(){dataLayer.push(arguments);}' +
+                  "gtag('js', new Date());" +
+                  `gtag('config', '${GA_MEASUREMENT_ID}');`,
+              }}
+            />
+          </>
+        ) : null}
+      </head>
       <body className={`${geist.variable} antialiased`}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'WebSite', name: 'Emotion Center', url: 'https://emotioncenter.lol', description: 'A safe, anonymous space for every emotion.' }) }} />
         <CommunityProvider>
